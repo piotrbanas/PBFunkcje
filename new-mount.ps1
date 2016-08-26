@@ -1,10 +1,32 @@
-﻿function new-mount
-{
+﻿<#
+.Synopsis
+   Montowanie zasobu sieciowego.
+.DESCRIPTION
+   Mapowanie zasobów sieciowych na potrzeby skryptów.
+   Nie przechowuje haseł otwartym tekstem.
+.PARAMETER user
+   Użytkownik na którym checmy się połączyć. Jeśli żaden nie zostanie wymieniony, będzie to użytkownik sesji wywyołującej funkcję.
+.PARAMETER passfile
+   Ścieżka do pliku z zaszyfrowanym hasłem. Jeśli plik nie istnieje, zostanie wywołana funkcja new-passfile.
+.PARAMETER mountpoint
+   Zasób, który chcemy zamontować
+.PARAMETER mountname
+   Nazwa dysku w naszej sesji Powershella. Nie jest ograniczona do jednej litery, jak w Explorerze.
+.EXAMPLE
+   new-mount -user Administrator -passfile admSecurePass.txt -mountpoint '\\server\folder' -mountname 'DyskABC'
+   Montuje \\server\folder pod nazwą 'DyskABC' na poświadczeniach Administrator.
+.NOTES
+   Autor: p.banas@***REMOVED***.com.pl
+   Część modułu SCHFunkcje. Aktualna wersja zawsze w ***REMOVED***\IT_DEV\Repo\SCHFunkcje
 
+#>
+function new-mount
+{
+[CmdletBinding()]
   param
   (
     [String]
-    $user = '$env:USERNAME',
+    $user = "$env:USERNAME",
 
     [String]
     $passfile = "Pass$user.txt",
@@ -29,5 +51,5 @@
   
   # Montuję zasób sieciowy
   New-PSDrive -name $mountname -PSProvider FileSystem -Root $mountpoint -Credential $cred -Scope global
-
+  
 }

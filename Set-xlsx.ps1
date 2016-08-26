@@ -4,7 +4,7 @@
       Funkcja do wypełniania arkuszy Excela, np. wklejania wyników do checklisty.
 
       .DESCRIPTION
-      Używana razem z open-xlsx i save-xlsx.
+      Używana razem z . open-xlsx i save-xlsx. Należy unikać złączonych komórek.
 
       .PARAMETER worksheet
       Arkusz do edytowania.
@@ -27,6 +27,8 @@
 
       .NOTES
       Kontakt: p.banas@***REMOVED***.com.pl
+      Część modułu SCHFunkcje. 
+      Aktualna wersja w ***REMOVED***\IT_DEV\Repo\SCHFunkcje
 
   #>
 

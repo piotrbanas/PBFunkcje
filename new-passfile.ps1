@@ -34,5 +34,5 @@
   )
   
   Read-Host "Podaj hasło dla $user" -AsSecureString | ConvertFrom-SecureString | Out-File "$passfile"
-  
+  Get-PSCallStack
 }

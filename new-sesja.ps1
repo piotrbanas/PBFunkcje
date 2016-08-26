@@ -26,12 +26,10 @@
 
       .NOTES
       Autor: p.banas@***REMOVED***.com.pl
-      Aktualna wersja zawsze w ***REMOVED***\IT_DEV\Repo\SCHFunkcje
-
+      Część modułu SCHFunkcje. Aktualna wersja zawsze w ***REMOVED***\IT_DEV\Repo\SCHFunkcje
     
   #>
-
-
+  
   [CmdletBinding()] 
   param
   (
@@ -46,6 +44,7 @@
     [String]
     $passfile = "Pass$user.txt" 
   ) # end param
+
   BEGIN{
       Write-Verbose -Message 'Sprawdzam bezpieczny plik.'
       if (!(Test-Path -Path $passfile))
@@ -56,17 +55,16 @@
       Write-Verbose -Message 'Tworzę obiekt poświadczeń z dostarczonej nazwy użytkownika i bezpiecznego pliku'
       $pass = Get-Content -path $passfile | ConvertTo-SecureString
       $cred = new-object -typename System.Management.Automation.PSCredential -argumentlist $user, $pass
-      }
-  # Otwieram PSsesję
+      } # End Begin
+
   PROCESS{
         Write-Verbose -Message "Zestawiam sesję z $computername"
         New-PSSession -ComputerName $computername -Credential $cred
-        }
+        } # End Process
 
-  END {
+  END{
     #    Write-Verbose -Message 'Tworzę listę sesji'
     #    $sesje = Get-PSSession | Where-Object -Property ComputerName -like '131.*'
     #    Return $sesje
-  
-  }
+  } # End End
 }

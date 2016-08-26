@@ -1,4 +1,18 @@
-﻿function enter-CiscoVPN
+﻿<#
+.Synopsis
+   Zestawianie połączenia VPN Cisco AnyConnect
+.DESCRIPTION
+   Wymaga zainstalowanego Cisco\Cisco AnyConnect Secure Mobility Client.
+.EXAMPLE
+   enter-CiscoVPN -ip '***REMOVED***' -user $env:USERNAME -passfile .\vpnSecure.txt
+   Zestawia VPN z Kiabi
+.NOTES
+   Część modułu SCHFunkcje. 
+   Aktualna wersja w ***REMOVED***\IT_DEV\Repo\SCHFunkcje
+   Kontakt: p.banas@***REMOVED***.com.pl
+#>
+
+function enter-CiscoVPN
 {
   param
   (

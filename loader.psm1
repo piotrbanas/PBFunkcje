@@ -18,3 +18,4 @@
 . $PSScriptRoot\save-xlsx.ps1
 . $PSScriptRoot\Set-xlsx.ps1
 . $PSScriptRoot\emailSMTP.ps1
+. $PSScriptRoot\ImportCennik.ps1
