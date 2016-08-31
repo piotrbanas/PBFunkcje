@@ -19,3 +19,4 @@
 . $PSScriptRoot\Set-xlsx.ps1
 . $PSScriptRoot\emailSMTP.ps1
 . $PSScriptRoot\ImportCennik.ps1
+. $PSScriptRoot\get-wmiUrz.ps1
