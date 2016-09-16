@@ -37,7 +37,7 @@ param(
             $os = Get-WmiObject -ComputerName $computer -ClassName win32_operatingsystem -ErrorAction Stop -Credential $credential
             $cs = Get-WmiObject -ComputerName $computer -ClassName win32_computersystem -ErrorAction Stop -Credential $credential
             $bs = Get-WmiObject -ComputerName $computer -ClassName win32_bios -ErrorAction Stop -Credential $credential
-            $so = Get-WmiObject -ComputerName $computer -ClassName win32_Product -ErrorAction Stop -Credential $credential | where Name -like "$Soft"
+            #$so = Get-WmiObject -ComputerName $computer -ClassName win32_Product -ErrorAction Stop -Credential $credential | where Name -like "$Soft"
             $ping = Test-Connection -ComputerName $computer -Count 1
 
             $properties = [ordered]@{Host = $computer
@@ -52,6 +52,7 @@ param(
                             Producent = $cs.Manufacturer
                             Model = $cs.Model
                             BIOS = $bs.Name
+                            DataBios = [Management.ManagementDateTimeConverter]::ToDateTime($bs.ReleaseDate)
                             ProducentBIOS = $bs.Mnufacturer
                             Architektura = $cs.SystemType
                             Oprogramowanie = $so.Name

@@ -20,3 +20,5 @@
 . $PSScriptRoot\emailSMTP.ps1
 . $PSScriptRoot\ImportCennik.ps1
 . $PSScriptRoot\get-wmiUrz.ps1
+. $PSScriptRoot\adminPass.ps1
+. $PSScriptRoot\ping-urz.ps1
