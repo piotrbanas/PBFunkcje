@@ -18,12 +18,10 @@
     new-passfile -user Administrator -passfile AdmPass.txt
     
     .NOTES
-    kontakt: p.banas@***REMOVED***.com.pl
-    Aktualna wersja zawsze w ***REMOVED***\IT_DEV\Repo\SCHFunkcje
-
+    Autor: piotrbanas@xper.pl
+    Składnik modułu PBFunkcje
   #>
-
-
+  
   param
   (
     [Parameter(Mandatory=$true)][String]
@@ -34,5 +32,4 @@
   )
   
   Read-Host "Podaj hasło dla $user" -AsSecureString | ConvertFrom-SecureString | Out-File "$passfile"
-  Get-PSCallStack
 }

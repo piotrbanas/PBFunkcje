@@ -2,7 +2,7 @@
 {
   # Zamykam VPN UI
     $proces = Get-Process vpnui -ErrorAction SilentlyContinue
-  if (!($proces -eq $null))
+  if ($proces)
   {
     Stop-Process $proces
   } 

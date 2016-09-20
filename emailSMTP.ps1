@@ -5,36 +5,31 @@
    Wysyłanie email bez uwierzytelniania SMTP, a więc tylko pomiędzy kontami tego samego serwera pocztowego.
    Nadawca nie może być listą mailingową.
 .EXAMPLE
-   send-smtp -nadawca 'konto@***REMOVED***.com.pl' -odbiorca 'konto2@***REMOVED***.com.pl', 'konto3@***REMOVED***.com.pl' -temat 'Tytuł' -tresc 'Treść maila'
+   send-smtp -nadawca 'konto@mail.pl' -odbiorca 'konto2@mail.pl', 'konto3@mail.pl' -temat 'Tytuł' -tresc 'Treść maila' -serwerSMTP 'smtp.mail.pl'
  .NOTES
-   Autor: p.banas@***REMOVED***.com.pl
-   Część modułu SCHFunkcje. Aktualna wersja zawsze w ***REMOVED***\IT_DEV\Repo\SCHFunkcje
+   Kontakt: piotrbanas@xper.pl
+   Część modułu PBFunkcje. Aktualna wersja zawsze w github.com/piotrbanas
 #>
 
 function send-smtp
 {
 [CmdletBinding()]
   PARAM(
+        [string]
+        $SerwerSMTP = 'box.xper.pl',
+        
         [Parameter(
-        ValueFromPipeline
-        )]
-        $SerwerSMTP = '***REMOVED***.home.pl',
-        [Parameter(
-        ValueFromPipeline,
         mandatory)]
-        $nadawca,
+        [string]$nadawca,
+        
         [Parameter(
-        ValueFromPipeline,
         mandatory)]
         [string[]]$odbiorca,
-        [Parameter(
-        ValueFromPipeline
-        )]
-        $temat,
-        [Parameter(
-        ValueFromPipeline
-        )]
-        $tresc
+        
+        [string]$temat = 'Wysłane z funkcji send-smtp',
+        
+        [Parameter]
+        [string]$tresc = 'Wiadomość testowa'
 
   ) # End param
 foreach ($adres in $odbiorca){

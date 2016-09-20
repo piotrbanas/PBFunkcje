@@ -1,6 +1,6 @@
 ﻿function open-xlsx {
   Param(
-    $xlsx = "C:\Users\Piotr\Desktop\ps1\***REMOVED***\***REMOVED*** ping\Kiabi_Checklist.xls",
+    $xlsx = "C:\temp\Checklista.xls",
 	$visible = $false
   )
   $Excel = New-Object -ComObject excel.application

@@ -1,19 +1,17 @@
-﻿<#
+﻿function enter-CiscoVPN {
+<#
 .Synopsis
    Zestawianie połączenia VPN Cisco AnyConnect
 .DESCRIPTION
-   Wymaga zainstalowanego Cisco\Cisco AnyConnect Secure Mobility Client.
+   Wymaga zainstalowanego Cisco AnyConnect Secure Mobility Client.
 .EXAMPLE
-   enter-CiscoVPN -ip '***REMOVED***' -user $env:USERNAME -passfile .\vpnSecure.txt
-   Zestawia VPN z Kiabi
+   enter-CiscoVPN -ip 'x.x.x.x' -user uzytkownikvpn -passfile .\vpnSecure.txt
 .NOTES
-   Część modułu SCHFunkcje. 
-   Aktualna wersja w ***REMOVED***\IT_DEV\Repo\SCHFunkcje
-   Kontakt: p.banas@***REMOVED***.com.pl
+   Część modułu PBFunkcje. Aktualna wersja zawsze w github.com/piotrbanas
+   Kontakt: piotrbanas@xper.pl
 #>
+[cmdletbinding()]
 
-function enter-CiscoVPN
-{
   param
   (
     [String]
@@ -22,14 +20,16 @@ function enter-CiscoVPN
     [String]
     $passfile = "vpnSecure$user.txt",
     
+    [Parameter (mandatory,HelpMessage='Adres docelowy')]
     [String]
-    $ip = '***REMOVED***'
+    $ip
   )
   
   # Zamykam klienta graficznego
   $proces = Get-Process vpnui -ErrorAction SilentlyContinue
-  if (!($proces -eq $null))
+  if ($proces)
   {
+    Write-Verobse 'Zamykam klienta graficznego'
     Stop-Process $proces
   } 
     
@@ -37,20 +37,21 @@ function enter-CiscoVPN
 
   if (!(Test-Path $passfile))
   {
+    Write-Verbose 'Wywołuję new-passfile'
     new-passfile -user $user -passfile $passfile
   }
   
-
+  Write-Verbose 'Tworzę obiekt poświadczeń'
   $pass = Get-Content -path $passfile | ConvertTo-SecureString
   $cred = new-object -typename System.Management.Automation.PSCredential -argumentlist $user, $pass
   
-  # Tworzę dane połączeniowe dla vpncli
+  Write-Verbose 'Tworzę dane połączeniowe dla vpncli'
   $s = "connect $ip" | out-string
   $s += 'y' | Out-String
   $s += "$user" | Out-String
   $s += $cred.GetNetworkCredential().password
     
-  # Nawiązuję sesję
+  Write-Verbose 'Nawiązuję sesję'
   $s  | &"c:\Program Files (x86)\Cisco\Cisco AnyConnect Secure Mobility Client\vpncli.exe" -s | out-null
   
   # Czyszczę obiekt połączeniowy

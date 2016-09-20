@@ -14,13 +14,13 @@
     Skan urządzeń z pliku.
 
     .EXAMPLE
-    dir wagi*.txt | ping-urz
+    ls wagi*.txt | ping-urz
     Skan urządzeń z wielu plików.
     
     .NOTES
-    Część modułu SCHFunkcje
-    kontakt: p.banas@***REMOVED***.com.pl
-    Aktualna wersja zawsze w ***REMOVED***\IT_DEV\Repo\SCHFunkcje
+    Część modułu PBFunkcje
+    kontakt: piotrbanas@xper.pl
+    Aktualna wersja github.com/piotrbanas
 
   #>
 [cmdletBinding()]
@@ -51,6 +51,6 @@ $txp = foreach ($txL in $txList){
         Write-Output $obj
         } # end foreach
 
-$txp | ft -AutoSize
+$txp | Format-Table -AutoSize
 }
 }

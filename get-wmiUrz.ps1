@@ -12,19 +12,23 @@ function get-wmiUrz {
 .PARAMETER soft
    Możemy odpytać urządzenie o zainstalowane oprogramowanie.
 .EXAMPLE
-   get-wmiUrz -computername ***REMOVED***.162.62 -credential Administrator
+   get-wmiUrz -computername 192.168.12.36
 .EXAMPLE
-   get-wmiUrz -computername (Get-content .\ListaIP.txt) -credential Administrator -soft 'Mettler Toledo' | ConvertTo-Csv -NoTypeInformation > .\wagi.csv
+   get-wmiUrz -computername (Get-content .\ListaIP.txt) -credential Administrator -soft 'Mettler Toledo' | ConvertTo-Csv -NoTypeInformation > .\wagiInwentarz.csv
 .EXAMPLE 
-   get-wmiUrz -computername ***REMOVED***.162.62 -credential Administrator -soft "*" | select -ExpandProperty Oprogramowanie
+   Get-content .\ListaIP.txt | get-wmiUrz -soft "*" | select -ExpandProperty Oprogramowanie
+.NOTES
+   Część modułu PBFunkcje. Aktualna wersja zawsze w github.com/piotrbanas
+   Autor: piotrbanas@xper.pl
 #>
 param(
         [parameter(Mandatory=$True,
                    ValueFromPipeline=$True,
                    ValueFromPipelineByPropertyName=$True,
-                   HelpMessage="Nazwa kompa.")]
+                   HelpMessage='Nazwa kompa.')]
         [Alias('Hostname','cn')]
         [string[]]$computername,
+        
         [System.Management.Automation.CredentialAttribute()]$credential,
         [string]$soft = '*'
     )
@@ -37,7 +41,7 @@ param(
             $os = Get-WmiObject -ComputerName $computer -ClassName win32_operatingsystem -ErrorAction Stop -Credential $credential
             $cs = Get-WmiObject -ComputerName $computer -ClassName win32_computersystem -ErrorAction Stop -Credential $credential
             $bs = Get-WmiObject -ComputerName $computer -ClassName win32_bios -ErrorAction Stop -Credential $credential
-            #$so = Get-WmiObject -ComputerName $computer -ClassName win32_Product -ErrorAction Stop -Credential $credential | where Name -like "$Soft"
+            $so = Get-WmiObject -ComputerName $computer -ClassName win32_Product -ErrorAction Stop -Credential $credential | Where-Object Name -like "$Soft"
             $ping = Test-Connection -ComputerName $computer -Count 1
 
             $properties = [ordered]@{Host = $computer

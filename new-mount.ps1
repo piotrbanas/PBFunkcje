@@ -1,11 +1,12 @@
-﻿<#
-.Synopsis
+﻿function new-mount {
+<#
+.SYNOPSIS
    Montowanie zasobu sieciowego.
 .DESCRIPTION
    Mapowanie zasobów sieciowych na potrzeby skryptów.
    Nie przechowuje haseł otwartym tekstem.
 .PARAMETER user
-   Użytkownik na którym checmy się połączyć. Jeśli żaden nie zostanie wymieniony, będzie to użytkownik sesji wywyołującej funkcję.
+   Użytkownik na którym chcemy się połączyć. Jeśli żaden nie zostanie wymieniony, będzie to użytkownik sesji wywołującej funkcję.
 .PARAMETER passfile
    Ścieżka do pliku z zaszyfrowanym hasłem. Jeśli plik nie istnieje, zostanie wywołana funkcja new-passfile.
 .PARAMETER mountpoint
@@ -16,12 +17,10 @@
    new-mount -user Administrator -passfile admSecurePass.txt -mountpoint '\\server\folder' -mountname 'DyskABC'
    Montuje \\server\folder pod nazwą 'DyskABC' na poświadczeniach Administrator.
 .NOTES
-   Autor: p.banas@***REMOVED***.com.pl
-   Część modułu SCHFunkcje. Aktualna wersja zawsze w ***REMOVED***\IT_DEV\Repo\SCHFunkcje
+   Autor: piotrbanas@xper.pl
+   Część modułu PBFunkcje. Aktualna wersja w github.com/piotrbanas
 
 #>
-function new-mount
-{
 [CmdletBinding()]
   param
   (

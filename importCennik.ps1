@@ -3,18 +3,22 @@
    Import cennika do postaci obiektowej.
 .DESCRIPTION
    Funkcja przerabia cennik (np. FHAUCP00) z postaci tekstowej do obiektowej.
-   UdostÄ™pnia obiekt $cennik w ramach sesji PowerShell.
+   Udostêpnia obiekt $cennik w ramach sesji PowerShell.
+.PARAMETER fhaucp
+   Plik cennika
 .EXAMPLE
    Import-Cennik -fhaucp .\FHAUCP00.20160818.1
    $cennik | Where segment -eq 302
-
+.NOTES
+   Kontakt: piotrbanas@xper.pl
+   Czêœæ modu³u PBFunkcje.
 #>
 
 function global:Import-Cennik
 {
 [CmdletBinding()] 
 param (
-[Parameter(Mandatory=$True, 
+[Parameter(Mandatory=$True,HelpMessage='Œcie¿ka do pliku z cennikiem', 
     ValueFromPipeline=$True)]
     $fhaucp	
 ) # end Param
