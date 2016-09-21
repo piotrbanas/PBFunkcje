@@ -5,7 +5,7 @@
     
     .DESCRIPTION
     Narzędzie wyciąga z AD aktualne hasło lokalnego administratora komputera oraz datę wygaśnięcia.
-    Przydatne w środowiskach, w których konto lokalnego admina jest definiowane w AD
+    Przydatne w środowiskach, w których używany jest Local Administrator Password Solution (LAPS).
 
     .PARAMETER computername
     Nazwa hosta, alias 'c', 'cn' lub 'Hostname'
@@ -14,8 +14,7 @@
     get-adminPass -c Nazwa_hosta1,Nazwa_Hosta2
 
     .EXAMPLE
-    Get-ADComputer -Filter * -SearchBase "OU=Computers,OU=Business,DC=pol,DC=domena" |
-    get-adminPass
+    Get-ADComputer -Filter * -SearchBase "OU=Computers,OU=Business,DC=pol,DC=domena" | get-adminPass
 
     .NOTES
     Kontakt: piotrbanas@xper.pl
