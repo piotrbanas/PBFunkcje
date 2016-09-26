@@ -2,35 +2,36 @@
 function get-wmiUrz {
 <#
 .Synopsis
-   Pobieranie informacji o urządzeniach, np. wagach.
+   Pobieranie informacji o komputerach i urządzeniach z Windows.
 .DESCRIPTION
-   Funkcja odpytuje urządzenia przez WMI.
+   Narzędzie odpytuje urządzenia przez WMI. Przydatne do inwentaryzacji sprzętu, zainstalowanego oprogramowania, również na urządzeniach z Windows Embedded i POSReady.
 .PARAMETER computername
-   Jeden lub więcej Hostname lub IP odpytywanej maszyny
+   Jeden lub więcej Hostname lub IP odpytywanej maszyny. 
 .PARAMETER credential
    Poświadczenia
 .PARAMETER soft
-   Możemy odpytać urządzenie o zainstalowane oprogramowanie.
+   Możemy odpytać urządzenie o zainstalowane oprogramowanie. Domyślnie pomijane. Akceptuje wieloznaczniki.
 .EXAMPLE
    get-wmiUrz -computername 192.168.12.36
 .EXAMPLE
-   get-wmiUrz -computername (Get-content .\ListaIP.txt) -credential Administrator -soft 'Mettler Toledo' | ConvertTo-Csv -NoTypeInformation > .\wagiInwentarz.csv
+   get-wmiUrz -computername (Get-content .\ListaIP.txt) -credential Administrator -soft 'Mettler Toledo*' | ConvertTo-Csv -NoTypeInformation > .\wagiInwentarz.csv
 .EXAMPLE 
-   Get-content .\ListaIP.txt | get-wmiUrz -soft "*" | select -ExpandProperty Oprogramowanie
+   Get-content .\ListaIP.txt | get-wmiUrz | where {$_."FreeRAM[MB]" -lt 100}
+.EXAMPLE
+   get-wmiUrz localhost -soft * | select -ExpandProperty Oprogramowanie
 .NOTES
-   Część modułu PBFunkcje. Aktualna wersja zawsze w github.com/piotrbanas
+   Część modułu PBFunkcje. Aktualna wersja zawsze w https://github.com/piotrbanas/pbfunkcje.git
    Autor: piotrbanas@xper.pl
 #>
 param(
         [parameter(Mandatory=$True,
                    ValueFromPipeline=$True,
                    ValueFromPipelineByPropertyName=$True,
-                   HelpMessage='Nazwa kompa.')]
+                   HelpMessage='Poproszę nazwę kompa.')]
         [Alias('Hostname','cn')]
         [string[]]$computername,
-        
         [System.Management.Automation.CredentialAttribute()]$credential,
-        [string]$soft = '*'
+        [string]$soft = $null
     )
     BEGIN {}
 
@@ -41,7 +42,9 @@ param(
             $os = Get-WmiObject -ComputerName $computer -ClassName win32_operatingsystem -ErrorAction Stop -Credential $credential
             $cs = Get-WmiObject -ComputerName $computer -ClassName win32_computersystem -ErrorAction Stop -Credential $credential
             $bs = Get-WmiObject -ComputerName $computer -ClassName win32_bios -ErrorAction Stop -Credential $credential
-            $so = Get-WmiObject -ComputerName $computer -ClassName win32_Product -ErrorAction Stop -Credential $credential | Where-Object Name -like "$Soft"
+            if ($soft) {
+            $so = Get-WmiObject -ComputerName $computer -ClassName win32_Product -ErrorAction Stop -Credential $credential | Where-Object Name -like $Soft
+            }
             $ping = Test-Connection -ComputerName $computer -Count 1
 
             $properties = [ordered]@{Host = $computer
@@ -63,9 +66,9 @@ param(
                             Boot = [Management.ManagementDateTimeConverter]::ToDateTime($os.LastBootUpTime)
                             Domain = $cs.Domain
                             Rdzenie = $cs.NumberOfProcessors
-                            'RAM[MB]' = $os.TotalVisibleMemorySize/1kb
-                            'FreeRAM[MB]' = $os.FreePhysicalMemory/1kb
-                            'FreeSpaceInPagingFiles[MB]' = $os.FreeSpaceInPagingFiles/1kb
+                            'RAM[MB]' = $os.TotalVisibleMemorySize/1kb -as [Int]
+                            'FreeRAM[MB]' = $os.FreePhysicalMemory/1kb -as [int]
+                            'FreePageFile[MB]' = $os.FreeSpaceInPagingFiles/1kb -as [int]
                             }
    
         } catch {
