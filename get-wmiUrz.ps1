@@ -38,15 +38,15 @@ param(
     PROCESS {
     foreach ($computer in $computername) {
         try {
-
+            $ping = Test-Connection -ComputerName $computer -Count 1 -ErrorAction SilentlyContinue
             $os = Get-WmiObject -ComputerName $computer -ClassName win32_operatingsystem -ErrorAction Stop -Credential $credential
             $cs = Get-WmiObject -ComputerName $computer -ClassName win32_computersystem -ErrorAction Stop -Credential $credential
+            $cpu = Get-WmiObject -ComputerName $computer -Class win32_processor -ErrorAction Stop -Credential $credential
             $bs = Get-WmiObject -ComputerName $computer -ClassName win32_bios -ErrorAction Stop -Credential $credential
             if ($soft) {
             $so = Get-WmiObject -ComputerName $computer -ClassName win32_Product -ErrorAction Stop -Credential $credential | Where-Object Name -like $Soft
             }
-            $ping = Test-Connection -ComputerName $computer -Count 1
-
+            
             $properties = [ordered]@{Host = $computer
                             Nazwa = $os.CSName
                             Status = $cs.Status
@@ -61,6 +61,7 @@ param(
                             BIOS = $bs.Name
                             DataBios = [Management.ManagementDateTimeConverter]::ToDateTime($bs.ReleaseDate)
                             ProducentBIOS = $bs.Mnufacturer
+                            Procesor = $cpu.Name
                             Architektura = $cs.SystemType
                             Oprogramowanie = $so.Name
                             Boot = [Management.ManagementDateTimeConverter]::ToDateTime($os.LastBootUpTime)
