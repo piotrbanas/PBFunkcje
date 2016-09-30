@@ -22,3 +22,4 @@
 . $PSScriptRoot\get-wmiUrz.ps1
 . $PSScriptRoot\get-adminPass.ps1
 . $PSScriptRoot\ping-urz.ps1
+. $PSScriptRoot\restDO.ps1
