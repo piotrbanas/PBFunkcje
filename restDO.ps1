@@ -53,7 +53,7 @@ $rest.droplets.id | ForEach-Object {
 $obj = New-Object -TypeName PSObject -Property $props
 Write-Output $obj
 }#end foreach
-}#end get-droplets
+}#end get-droplet
 
 
 function set-droplet {
@@ -85,17 +85,20 @@ function set-droplet {
    $action,
 
    [parameter(mandatory,Valuefrompipeline,valuefrompipelinebypropertyname)]
-   [long]$id
+   [long[]]$id
 
   )#end param
-
+BEGIN{
 $apiKey = Get-Content $tokenfile
 $url = "https://api.digitalocean.com/v2"
 $header = @{"Authorization"="Bearer " + $apikey;"Content-Type"="application/json"}
 $command  = @"
 {"type": "$action"}
 "@
-
-Invoke-RestMethod -Uri $url/droplets/$id/actions -Headers $header -method post -Body $command -ContentType Application/JSON
-
+}#end BEGIN
+PROCESS{
+    foreach ($i in $id){
+    Invoke-RestMethod -Uri $url/droplets/$i/actions -Headers $header -method post -Body $command -ContentType Application/JSON
+    }
+}#end PROCESS
 }#end set-droplet
