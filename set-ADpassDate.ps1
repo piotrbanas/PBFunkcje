@@ -7,9 +7,9 @@
     .PARAMETER samaccountname
     Nazwa konta w AD. Przyjmuje wartości z pipe'a.
     .EXAMPLE
-    set-ADpassDate jkowalski
+    set-ADpassDate jkowalski, mnowak
     .EXAMPLE
-    set-aduser -Filter * -SearchBase "OU=users,OU=HR,OU=Business,DC=pol,DC=domena" | select samaccountname | set-ADpassDate
+    get-aduser -Filter * -SearchBase "OU=users,OU=HR,OU=Business,DC=pol,DC=domena" | select samaccountname | set-ADpassDate
     Resetuje parametr pwdlastset użytkowników całej Jednostki organizacyjnej.
     .EXAMPLE
     get-aduser -Filter * | select samaccountname | get-ADpassDate | where {$_.wygasa -gt (Get-Date) -and $_.wygasa -lt (Get-Date).AddDays(5)} | set-ADpassDate
