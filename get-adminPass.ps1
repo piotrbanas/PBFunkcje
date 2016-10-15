@@ -1,26 +1,24 @@
 ﻿function get-adminPass {
   <#
     .SYNOPSIS
-    Narzędzie wyciąga z AD hasło lokalnego administratora komputera
+    Get LAPS-generated local admin password.
     
     .DESCRIPTION
-    Narzędzie wyciąga z AD aktualne hasło lokalnego administratora komputera oraz datę wygaśnięcia.
-    Przydatne w środowiskach, w których używany jest Local Administrator Password Solution (LAPS).
+    Tool queries Active Directory for computer's Local Administrator Password Solution (LAPS) attributes. 
 
     .PARAMETER computername
-    Nazwa hosta, alias 'c', 'cn' lub 'Hostname'
+    Hostname, aliases: 'c', 'cn', 'Hostname'
 
     .EXAMPLE
-    get-adminPass -c Nazwa_hosta1,Nazwa_Hosta2
+    get-adminPass -c Hostname1, Hostname2
 
     .EXAMPLE
-    Get-ADComputer -Filter * -SearchBase "OU=Computers,OU=Business,DC=pol,DC=domena" | get-adminPass
-
+    Get-ADComputer -Filter * -SearchBase "OU=Computers,OU=Business,DC=local,DC=domain" | get-adminPass
+	Get local admin passwords for every computer object in OU.
     .NOTES
-    Kontakt: piotrbanas@xper.pl
+    Contact: piotrbanas@xper.pl
     .LINK
     http://github.com/piotrbanas
-
   #>
 
 
@@ -31,7 +29,7 @@ param
                    Mandatory=$true,ValueFromPipeline=$True,
                    ValueFromPipelineByPropertyName=$True,
                    Position = 0,
-                   HelpMessage='Potrzebna nazwa kompa.')]
+                   HelpMessage='Provide Computername')]
         [Alias('Hostname','cn','c')]
         [string[]]$computername
     )
@@ -44,17 +42,17 @@ PROCESS{
             $t = Get-ADComputer $computer -Property ms-Mcs-AdmPwdExpirationTime | Select-Object -ExpandProperty ms-Mcs-AdmPwdExpirationTime
         
             $props = @{
-                Nazwa = $computer
-                Hasło = $p."ms-Mcs-AdmPwd"
-                Wygasa = [datetime]::FromFileTime("$t")
+                Name = $computer
+                Password = $p."ms-Mcs-AdmPwd"
+                Expires = [datetime]::FromFileTime("$t")
             }
         }
 
         catch{
             $props = @{
-                Nazwa = $computer
-                Hasło = 'Brak obiektu'
-                Wygasa = $null
+                Name = $computer
+                Password = 'Object not found'
+                Expires = $null
                 }
         }
 
@@ -65,9 +63,6 @@ PROCESS{
         }
     }
 
-END {
-   # Write-Output $pass | ft -Property Name, ms-Mcs-AdmPwd -AutoSize
-   }
-
+END {}
 }
 

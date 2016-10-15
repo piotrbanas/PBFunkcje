@@ -23,7 +23,7 @@ GUID = 'ce5db13f-ee27-4cde-8710-133ef6464d8d'
 Author = 'piotrbanas@xper.pl'
 
 # Company
-CompanyName = 'piotr'
+CompanyName = 'xper.pl'
 
 # Copyright
 Copyright = ''

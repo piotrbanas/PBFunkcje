@@ -16,7 +16,7 @@ function send-smtp
 [CmdletBinding()]
   PARAM(
         [string]
-        $SerwerSMTP = 'box.xper.pl',
+        $SerwerSMTP = 'smtp.domain.com',
         
         [Parameter(
         mandatory)]
