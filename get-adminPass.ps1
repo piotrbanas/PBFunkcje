@@ -66,7 +66,6 @@ PROCESS{
     }
 
 END {
-   # Write-Output $pass | ft -Property Name, ms-Mcs-AdmPwd -AutoSize
    }
 
 }

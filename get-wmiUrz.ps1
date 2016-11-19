@@ -12,7 +12,7 @@ function get-wmiUrz {
 .PARAMETER soft
    Możemy odpytać urządzenie o zainstalowane oprogramowanie. Domyślnie pomijane. Akceptuje wieloznaczniki.
 .EXAMPLE
-   get-wmiUrz -computername 192.168.12.36
+   get-wmiUrz -computername Host1
 .EXAMPLE
    get-wmiUrz -computername (Get-content .\ListaIP.txt) -credential Administrator -soft 'Mettler Toledo*' | ConvertTo-Csv -NoTypeInformation > .\wagiInwentarz.csv
 .EXAMPLE 
@@ -20,7 +20,8 @@ function get-wmiUrz {
 .EXAMPLE
    get-wmiUrz localhost -soft * | select -ExpandProperty Oprogramowanie
 .NOTES
-   Część modułu PBFunkcje. Aktualna wersja zawsze w https://github.com/piotrbanas/pbfunkcje.git
+   Część modułu PBFunkcje.
+   https://github.com/piotrbanas/pbfunkcje.git
    Autor: piotrbanas@xper.pl
 #>
 param(
@@ -74,9 +75,29 @@ param(
    
         } catch {
    
-            $properties = @{Host = $computer
-                            Status = 'Brak odpowiedzi'
+            $properties = [ordered]@{Host = $computer
+                            Nazwa = $null
+                            Status = 'BŁĄD'
                             'Ping[ms]' = $ping.ResponseTime
+                            Organizacja = $null
+                            NazwaOS = $null
+                            WersjaOS = $null
+                            ServicePack = $null
+                            DataInstOS = $null
+                            Producent = $nullr
+                            Model = $null
+                            BIOS = $null
+                            DataBios = $null
+                            ProducentBIOS = $null
+                            Procesor = $null
+                            Architektura = $null
+                            Oprogramowanie = $null
+                            Boot = $null
+                            Domain = $null
+                            Rdzenie = $null
+                            'RAM[MB]' = $null
+                            'FreeRAM[MB]' = $null
+                            'FreePageFile[MB]' = $null
                             }
         } finally {               
    
