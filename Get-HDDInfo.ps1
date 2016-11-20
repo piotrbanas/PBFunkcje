@@ -6,10 +6,15 @@
    Funkcja odpytuje urządzenia przez WMI.
 .PARAMETER computername
    Jeden lub więcej Hostname lub IP odpytywanej maszyny
+.PARAMETER typ
+   3 - dyski logiczne, 4 - sieciowe
 .PARAMETER credential
    Poświadczenia
 .EXAMPLE
    get-HDDInfo -computername 192.168.10.32 -credential Administrator
+.EXAMPLE
+   get-HDDInfo -typ 4
+   Podaje zamontowane dyski sieciowe
 .EXAMPLE
    get-HDDInfo -computername (Get-content .\ListaIP.txt) -credential Administrator | ConvertTo-Csv -NoTypeInformation > .\hdd.csv
 .EXAMPLE
@@ -21,14 +26,17 @@
 param(
     [Parameter(ValueFromPipeline)        ]
     [string[]]$computername = $env:COMPUTERNAME,
-    
+
+    [ValidateRange(0,6)]
+    [int]$typ = 3,
+
     [System.Management.Automation.CredentialAttribute()]$cred
 )#end param
 
 PROCESS{
     Foreach ($computer in $computername) {
     try{
-    $drives = Get-WmiObject -Class win32_logicalDisk -Filter "Drivetype = 3" -ComputerName $computer -Credential $cred -ErrorAction Stop
+    $drives = Get-WmiObject -Class win32_logicalDisk -Filter "Drivetype = $typ" -ComputerName $computer -Credential $cred -ErrorAction Stop
         Foreach ($drive in $drives) {
             $props = [ordered]@{
                 Urządzenie = $computer
