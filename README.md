@@ -1,6 +1,5 @@
 # PBFunkcje
-Moduł z często używanymi funkcjami. Zbudowany wg. modelu narzędzi administracyjnych Dona Jones'a.
-
+Moduł z często używanymi funkcjami.
 * Moduł udostępniany klientowi (najczęściej firmowemu IT) 
 * Funkcje w nim zawarte gwarantują kompatybilność bardziej złożonych skrytpów (tzw. kontrolerów)
 * Funkcje mają przypominać "cmdlety". Powinny:
