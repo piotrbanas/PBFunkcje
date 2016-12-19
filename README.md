@@ -1,7 +1,7 @@
 # PBFunkcje
 Moduł z często używanymi funkcjami.
 * Moduł udostępniany klientowi (najczęściej firmowemu IT) 
-* Funkcje w nim zawarte gwarantują kompatybilność bardziej złożonych skrytpów (tzw. kontrolerów)
+* Funkcje w nim zawarte gwarantują kompatybilność bardziej złożonych skryptów (tzw. kontrolerów)
 * Funkcje mają przypominać "cmdlety". Powinny:
   - być jak najbardziej ogólne
   - przestrzegać nazewnictwa czasownik-rzeczownik
