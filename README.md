@@ -6,8 +6,8 @@ Moduł z często używanymi funkcjami.
   - być jak najbardziej ogólne
   - przestrzegać nazewnictwa czasownik-rzeczownik
   - oferować pomoc opartą na komentarzach (get-help)
-  - przyjmować obiekty z pipe'a
-  - oddawać okreslone obiekty do pipe'a
+  - przyjmować obiekty z potoku
+  - oddawać okreslone obiekty
   - nie formatować prezezntacji danych
 * Jeśli funkcja jest specyficzna dla danej firmy lub środowiska, powinno to być odzwierciedlone w jej nazwie
 * Funkcje są narzędziami wykorzystywanymi przez "kontrolery" - skrypty sterujące. To w nich odbywa się formatowanie i prezentacja danych.
@@ -26,7 +26,7 @@ Przykładowe funkcje:
   
   <b>Enter-CiscoVPN</b> Automatyzacja połączeń Cisco AnyConnect bez przechowywania hasła.
   
-  <b>Open-Xlsx, Set-Xlsx i Save-xlsx</b> Edycja plików excel - np. wypełnianie checklist.
+  <b>Open-Xlsx, Set-Xlsx i Save-xlsx</b> Edycja plików excel - np. wypełnianie checklist, raportów.
   
   <b>Import-Cennik</b> Konwersja danych tekstowych do postaci obiektowej.
   
