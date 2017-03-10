@@ -20,3 +20,4 @@
 . $PSScriptRoot\ping-urz.ps1
 . $PSScriptRoot\restDO.ps1
 . $PSSCriptRoot\Get-HDDInfo.ps1
+. $PSScriptRoot\Invoke-PoolRecycle.ps1
