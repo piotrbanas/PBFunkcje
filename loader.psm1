@@ -22,3 +22,4 @@
 . $PSSCriptRoot\Get-HDDInfo.ps1
 . $PSScriptRoot\Invoke-PoolRecycle.ps1
 . $PSScriptRoot\Remove-IISLogFiles.ps1
+. $PSScriptRoot\New-TSQLquery.ps1
