@@ -21,3 +21,4 @@
 . $PSScriptRoot\restDO.ps1
 . $PSSCriptRoot\Get-HDDInfo.ps1
 . $PSScriptRoot\Invoke-PoolRecycle.ps1
+. $PSScriptRoot\Remove-IISLogFiles.ps1
