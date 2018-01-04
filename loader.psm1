@@ -23,4 +23,5 @@
 . $PSScriptRoot\Invoke-PoolRecycle.ps1
 . $PSScriptRoot\Remove-IISLogFiles.ps1
 . $PSScriptRoot\New-TSQLquery.ps1
-. $PSScriptRoot\Measure-VideoLength
+. $PSScriptRoot\Measure-VideoLength.ps1
+. $PSScriptRoot\ComponentHandling.ps1
