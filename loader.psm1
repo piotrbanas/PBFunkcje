@@ -25,3 +25,4 @@
 . $PSScriptRoot\New-TSQLquery.ps1
 . $PSScriptRoot\Measure-VideoLength.ps1
 . $PSScriptRoot\ComponentHandling.ps1
+. $PSSCriptRoot\CiscoVPNwrapper.ps1

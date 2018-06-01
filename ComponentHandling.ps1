@@ -90,26 +90,26 @@ Function New-ComPlusApp {
   )
 
     $comAdmin = New-Object -comobject COMAdmin.COMAdminCatalog
-    $apps = $comAdmin.GetCollection(“Applications”)
+    $apps = $comAdmin.GetCollection("Applications")
     $apps.Populate();
     $newComPackageName = $comName
 
     $appExistCheckApp = $apps | Where-Object {$_.Name -eq $newComPackageName}
     if($appExistCheckApp)
     {
-        Write-Host(“This COM+ Application already exists : $newComPackageName”)
+        Write-Host("This COM+ Application already exists : $newComPackageName")
     }
     Else
     {
         $newApp1 = $apps.Add()
-        $newApp1.Value(“Name”) = $newComPackageName
-        $newApp1.Value(“ApplicationAccessChecksEnabled”) = 0
+        $newApp1.Value("Name") = $newComPackageName
+        $newApp1.Value("ApplicationAccessChecksEnabled") = 0
 
-        $newApp1.Value(“Identity”) = $user
-        $newApp1.Value(“Password”) = $pass
+        $newApp1.Value("Identity") = $user
+        $newApp1.Value("Password") = $pass
 
         $saveChangesResult = $apps.SaveChanges()
-        Write-Host(“COM+ App Created : $saveChangesResult”)
+        Write-Host("COM+ App Created : $saveChangesResult")
 
         #Add Components
         Write-Host("Adding Components...")
