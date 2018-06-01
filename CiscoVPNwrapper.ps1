@@ -70,7 +70,7 @@ Function Invoke-CiscoVPN {
 		$s  | &"c:\Program Files (x86)\Cisco\Cisco AnyConnect Secure Mobility Client\vpncli.exe" -s | out-null
 
 		# cleanup
-		Remove-Variable $s
+		$s = $null
 	}
 
 	Else {
